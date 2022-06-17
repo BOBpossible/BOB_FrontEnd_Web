@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import dummy from './dummydataforMap.json';
+import './MapContainer.css';
+
 console.log( dummy);
 declare global {
   interface Window {
@@ -15,34 +17,72 @@ const MapContainer = () => {
         let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         let options = { //지도를 생성할 때 필요한 기본 옵션
           center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
-          level: 3 //지도의 레벨(확대, 축소 정도)
+          level: 8 //지도의 레벨(확대, 축소 정도)
         };
         let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
         for (let i=0; i< dummy.data.length; i++){
           displayMarker(dummy.data[i],i);
         }
         
         function displayMarker<T extends {name: string, location_y: number, location_x: number, active: boolean}>(data: T, i: number) {
-          // 마커가 표시될 위치입니다 
-          let markerPosition  = new window.kakao.maps.LatLng(data.location_y, data.location_x); 
-        
-          // 마커를 생성합니다 (핀 모양!)
-          let marker = new window.kakao.maps.Marker({
-              position: markerPosition,
-              map: map, // 마커가 지도 위에 표시되도록 설정합니다
-          });
+          // 인포윈도우 표시될 위치입니다 
+          let iwPosition  = new window.kakao.maps.LatLng(data.location_y, data.location_x); 
 
            // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-          var activeInfoWindow = '<div style="padding:5px;">Hello World!</div>';
-          var unactiveInfoWindow = '<div style="padding:5px;">nooo!</div>';
+          var activeInfoWindow = `<div class="active infowindow">${data.name}</div>`;
+          var unactiveInfoWindow = `<div class="unactive infowindow">${data.name}</div>`;
+          // const infowindowStyle = {{
+
+          // }}
 
           //인포윈도우
-          var infowindow = new window.kakao.maps.InfoWindow({
-            zIndex: 1,
-            position: markerPosition,
-            content: activeInfoWindow
+          let infowindow;
+          if (data.active) {
+            infowindow = new window.kakao.maps.InfoWindow({
+              zIndex: 1,
+              position: iwPosition,
+              content: activeInfoWindow,
+              disableAutoPan: false,
+              map: map
+            });
+          } else{
+            infowindow = new window.kakao.maps.InfoWindow({
+              zIndex: 1,
+              position: iwPosition,
+              content: unactiveInfoWindow,
+              disableAutoPan: false,
+              map: map
+            });
+          }
+          // https://sir.kr/g5_tip/14200
+          var infoTitle = document.querySelectorAll('.infowindow');
+          infoTitle.forEach(function(e: any) {
+            console.log(e);
+              var w = e.offsetWidth + 10;
+              var ml = w/2;
+              e.parentElement.style.width = w;  
+              // e.parentElement.style.top = "82px";
+              e.parentElement.style.position = "relative";
+              // e.parentElement.style.left = "50%";
+              // e.parentElement.style.marginLeft = -ml+"px";
+              // e.parentElement.style.width = w+"px";
+              // e.parentElement.previousSibling.style.display = "none"; //꼭지
+              if (data.active){
+                e.parentElement.previousSibling.style.backgroundImage = "url('https://user-images.githubusercontent.com/81412212/174341207-bbaa6a46-2d67-4731-8a51-9a429488affa.png')"; //꼭지
+              } else {
+                e.parentElement.previousSibling.style.backgroundImage = "url('https://user-images.githubusercontent.com/81412212/174342201-0ec0c927-97f1-49dd-8c23-d6a872d9dfad.png')"; //꼭지
+              }
+              // e.parentElement.parentElement.style.width = 105; //부모(기본인포윈도우영역)
+              e.parentElement.parentElement.style.display = "flex"; //부모(기본인포윈도우영역)
+              e.parentElement.parentElement.style.background = "none"; //부모(기본인포윈도우영역)
+              e.parentElement.parentElement.style.border = "none"; //부모(기본인포윈도우영역)
+              e.parentElement.parentElement.style.justifyContent = "center"; //부모(기본인포윈도우영역)
+              // e.parentElement.parentElement.style.border = "0px";
+              // e.parentElement.parentElement.style.background = "unset";
           });
-          infowindow.open(map) //(map,marker)하면 마커(핀)도 나타납니다.
+          var position = new window.kakao.maps.LatLng(37.586272, 127.029005);
+          map.setCenter(position); //중심좌표 재설정
 
           //클릭이벤트
           // window.kakao.maps.event.addListener(marker, 'click', function () {

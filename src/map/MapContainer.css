@@ -1,0 +1,20 @@
+.active {
+    background: #6C69FF;
+    color: white;
+    text-align: center;
+    height: 24px;
+    line-height:22px;
+    border-radius:4px;
+    padding:0px 10px;
+    font-size: 10px;
+}
+.unactive {
+    background: #2A2A2A;
+    color: white;
+    text-align: center;
+    height: 24px;
+    line-height:22px;
+    border-radius:4px;
+    padding:0px 10px;
+    font-size: 10px;
+}
