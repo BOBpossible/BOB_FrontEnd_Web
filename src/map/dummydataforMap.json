@@ -11,6 +11,16 @@
         "active": true
       },
       {
+        "id": 2,
+        "name": "안암역",
+        "phone": "041-334-5447",
+        "address": "서울특별시 성북구 인촌로 지하 89",
+        "placeUrl": "http://www.cnafarm.com",
+        "location_x": 127.029230599,
+        "location_y": 37.586331295,
+        "active": true
+      },
+      {
         "id": 3,
         "name": "가을빛농원",
         "phone": "010-8008-4204",
@@ -68,7 +78,7 @@
         "placeUrl": "http://kumjung.puruemi.com",
         "location_x": 127.1106344,
         "location_y": 36.5618476,
-        "active": false
+        "active": true
       },
       {
         "id": 25,
@@ -78,7 +88,7 @@
         "placeUrl": "http://parks.seoul.go.kr/gildong",
         "location_x": 127.1550557,
         "location_y": 37.54051971,
-        "active": false
+        "active": true
       },
       {
         "id": 27,
@@ -88,7 +98,7 @@
         "placeUrl": "http://www.appleking.co.kr",
         "location_x": 128.6093442,
         "location_y": 36.80982878,
-        "active": false
+        "active": true
       },
       {
         "id": 30,
@@ -98,7 +108,7 @@
         "placeUrl": "http://timeinn.blog.me/",
         "location_x": 126.9136007,
         "location_y": 37.69884424,
-        "active": false
+        "active": true
       },
       {
         "id": 31,
