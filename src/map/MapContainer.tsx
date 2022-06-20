@@ -33,7 +33,7 @@ const MapContainer = () => {
 
            // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
           var activeInfoWindow = `<div class="active infowindow""><span class="point">${data.point}P</span><span>${data.name}</span></div>`;
-          var unactiveInfoWindow = `<div class="unactive infowindow"><span class="point">${data.point}P</span><span>${data.name}</span></div>`;
+          var inactiveInfoWindow = `<div class="inactive infowindow"><span>${data.name}</span></div>`;
           // const infowindowStyle = {{
 
           // }}
@@ -52,7 +52,7 @@ const MapContainer = () => {
             infowindow = new window.kakao.maps.InfoWindow({
               zIndex: 1,
               position: iwPosition,
-              content: unactiveInfoWindow,
+              content: inactiveInfoWindow,
               disableAutoPan: false,
               map: map
             });
@@ -75,7 +75,7 @@ const MapContainer = () => {
         // https://sir.kr/g5_tip/14200
         var infoTitle = document.querySelectorAll('.infowindow');
         infoTitle.forEach(function(e: any) {
-          // console.log(e,e.className.includes('unactive'));
+          // console.log(e,e.className.includes('inactive'));
           var w = e.offsetWidth + 10;
           var ml = w/2;
           e.parentElement.style.width = w;  
@@ -84,8 +84,8 @@ const MapContainer = () => {
           // e.parentElement.style.left = "50%";
           // e.parentElement.style.marginLeft = -ml+"px";
           // e.parentElement.style.width = w+"px";
-          e.parentElement.previousSibling.style.top = "32px"; //꼭지
-          if (e.className.includes('unactive')){
+          console.log(e.parentElement.previousSibling);
+          if (e.className.includes('inactive')){
             e.parentElement.previousSibling.style.backgroundImage = "url('https://user-images.githubusercontent.com/81412212/174342201-0ec0c927-97f1-49dd-8c23-d6a872d9dfad.png')"; //꼭지
           } else {
             e.parentElement.previousSibling.style.backgroundImage = "url('https://user-images.githubusercontent.com/81412212/174341207-bbaa6a46-2d67-4731-8a51-9a429488affa.png')"; //꼭지
@@ -96,8 +96,18 @@ const MapContainer = () => {
           e.parentElement.parentElement.style.justifyContent = "center"; //부모(기본인포윈도우영역)
           // e.parentElement.parentElement.style.border = "0px";
           // e.parentElement.parentElement.style.background = "unset";
-          e.childNodes[1].style.display = "block";
-          e.childNodes[1].style.margin ="-7px";
+          // console.log(e.childNodes.length);
+          if (e.childNodes.length===2){ //활성화된 핀
+            e.childNodes[1].style.display = "block";
+            e.childNodes[1].style.margin ="-8px";
+            e.parentElement.style.top = "-12px";
+            // e.parentElement.previousSibling.style.top = "22px"; //꼭지
+          } else{
+            e.parentElement.style.top = "3px";
+            // e.parentElement.previousSibling.style.top = "20px"; //꼭지
+          }
+
+
         });
       }, [])
 
