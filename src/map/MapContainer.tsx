@@ -32,8 +32,8 @@ const MapContainer = () => {
           let iwPosition  = new window.kakao.maps.LatLng(data.location_y, data.location_x); 
 
            // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-          var activeInfoWindow = `<div class="active infowindow""><span>${data.point}P</span><span>${data.name}</span></div>`;
-          var unactiveInfoWindow = `<div class="unactive infowindow"><span>${data.point}</span><span>${data.name}</span></div>`;
+          var activeInfoWindow = `<div class="active infowindow""><span class="point">${data.point}P</span><span>${data.name}</span></div>`;
+          var unactiveInfoWindow = `<div class="unactive infowindow"><span class="point">${data.point}P</span><span>${data.name}</span></div>`;
           // const infowindowStyle = {{
 
           // }}
