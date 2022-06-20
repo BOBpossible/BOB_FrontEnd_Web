@@ -41,10 +41,6 @@ const MapContainer = () => {
                   disableAutoPan: false,
                   map: map
                 });
-                  // 마커에 클릭이벤트를 등록합니다
-                  window.kakao.maps.event.addListener(infowindow, 'click', function() {
-                    console.log("HI");
-                  });
               } else{
                 infowindow = new window.kakao.maps.InfoWindow({
                   zIndex: 1,
@@ -54,7 +50,6 @@ const MapContainer = () => {
                   map: map
                 });
               }
-              // onClickMarker(marker);
               var position = new window.kakao.maps.LatLng(37.586272, 127.029005);
               map.setCenter(position); //중심좌표 재설정
               
@@ -78,7 +73,7 @@ const MapContainer = () => {
                 e.parentElement.parentElement.style.border = "none"; //부모(기본인포윈도우영역)
                 e.parentElement.parentElement.style.justifyContent = "center"; //부모(기본인포윈도우영역)
                 
-                e.parentElement.parentElement.onclick = con //인포윈도우 클릭이벤트
+                e.parentElement.parentElement.onclick = handleIwClick //인포윈도우 클릭이벤트
                 e.parentElement.parentElement.style.cursor = "pointer";
               });
               
@@ -88,23 +83,9 @@ const MapContainer = () => {
           }); 
 
         }
-        function con(e: any) {
+        function handleIwClick(e: any) {
           console.log(e.target); //span.point, div.active, span내용 등 각자 다 눌릴수있음... 서버에 보내야한느것 확인
         }
-        function onClickMarker(marker: any) {
-          // 클릭이벤트
-          window.kakao.maps.event.addListener(marker, 'click', function (e:any) {
-            console.log(e);
-          })
-        }
-        // function displayMarker<T extends {name: string, address:string, location_y: number, location_x: number, active: boolean, point:number}>(data: T, i: number) {
-        //   var position = new window.kakao.maps.LatLng(37.586272, 127.029005);
-        //   map.setCenter(position); //중심좌표 재설정
-
-        //   //클릭이벤트
-        //   // window.kakao.maps.event.addListener(marker, 'click', function () {
-        //   // })
-        // }
 
       }, [])
 
