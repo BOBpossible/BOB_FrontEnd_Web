@@ -3,6 +3,7 @@
       {
         "id": 1,
         "name": "가나안농장",
+        "point": 490,
         "phone": "041-334-5447",
         "address": "충청남도 예산군 오가면 오촌리 318",
         "placeUrl": "http://www.cnafarm.com",
@@ -13,6 +14,7 @@
       {
         "id": 2,
         "name": "안암역",
+        "point": 500,
         "phone": "041-334-5447",
         "address": "서울특별시 성북구 인촌로 지하 89",
         "placeUrl": "http://www.cnafarm.com",
@@ -23,6 +25,7 @@
       {
         "id": 3,
         "name": "가을빛농원",
+        "point": 490,
         "phone": "010-8008-4204",
         "address": "경상북도 포항시 북구 신광면 비학로519번길 137-42",
         "placeUrl": "http://www.appleme.co.kr",
@@ -33,6 +36,7 @@
       {
         "id": 4,
         "name": "감귤체험농장",
+        "point": 490,
         "phone": "none",
         "address": "제주특별자치도 제주시 봉개동 1405",
         "placeUrl": "http://www.ejejufarm.com",
@@ -43,6 +47,7 @@
       {
         "id": 9,
         "name": "강화도자연체험농장",
+        "point": 490,
         "phone": "010-5378-2279",
         "address": "인천 강화군 길상면 해안남로 331",
         "placeUrl": "https://blog.naver.com/gnfarm",
@@ -53,6 +58,7 @@
       {
         "id": 11,
         "name": "곡천마을푸른체험농장",
+        "point": 490,
         "phone": "063-211-9954",
         "address": "전라북도 전주시 덕진구 화전동 1158",
         "placeUrl": "http://www.junjumall.com",
@@ -63,6 +69,7 @@
       {
         "id": 21,
         "name": "금곡팜스테이",
+        "point": 490,
         "phone": "none",
         "address": "광주 북구 금곡동 235",
         "placeUrl": "http://gumgok.cafe24.com",
@@ -73,6 +80,7 @@
       {
         "id": 23,
         "name": "금정알밤농원",
+        "point": 490,
         "phone": "041-852-6763",
         "address": "충청남도 공주시 정안면 전평리 64",
         "placeUrl": "http://kumjung.puruemi.com",
@@ -83,6 +91,7 @@
       {
         "id": 25,
         "name": "길동자연생태공원",
+        "point": 490,
         "phone": "02-472-2770",
         "address": "서울특별시 강동구 길동 476",
         "placeUrl": "http://parks.seoul.go.kr/gildong",
@@ -93,6 +102,7 @@
       {
         "id": 27,
         "name": "꼭지농원",
+        "point": 490,
         "phone": "0507-1347-0924",
         "address": "경상북도 영주시 대학로 148-1",
         "placeUrl": "http://www.appleking.co.kr",
@@ -103,6 +113,7 @@
       {
         "id": 30,
         "name": "꿈팜",
+        "point": 490,
         "phone": "010-4593-3207",
         "address": "경기도 고양시 덕양구 선유동 166",
         "placeUrl": "http://timeinn.blog.me/",
@@ -113,6 +124,7 @@
       {
         "id": 31,
         "name": "나룻배마을",
+        "point": 490,
         "phone": "031-833-5005",
         "address": "경기도 연천군 왕징면 북삼리 160-4",
         "placeUrl": "http://www.narubea.kr",
@@ -123,6 +135,7 @@
       {
         "id": 32,
         "name": "낙산배농원",
+        "point": 490,
         "phone": "010-4283-2264",
         "address": "강원도 양양군 양양읍 안산1길 41",
         "placeUrl": "http://www.naksanbe.pe.kr",
@@ -133,6 +146,7 @@
       {
         "id": 35,
         "name": "다감농원",
+        "point": 490,
         "phone": "0507-1320-4829",
         "address": "경상남도 창원시 의창구 대산면 진산대로505번길 51-17",
         "placeUrl": "ttp://www.idangam.co.kr",
@@ -143,6 +157,7 @@
       {
         "id": 40,
         "name": "달하산농장",
+        "point": 490,
         "phone": "010-3433-5724",
         "address": "충청남도 부여군 외산면 조령서로 110-55",
         "placeUrl": "http://dalhasan.puruemi.com",
@@ -153,6 +168,7 @@
       {
         "id": 41,
         "name": "대가농원",
+        "point": 490,
         "phone": "010-2225-6641",
         "address": "경기도 남양주시 조안면 다산로761번길 15",
         "placeUrl": "http://www.daega620.co.kr",
@@ -163,6 +179,7 @@
       {
         "id": 46,
         "name": "덕천강자연딸기작목반",
+        "point": 490,
         "phone": "055-754-4737",
         "address": "경상남도 진주시 수곡면 원창길 246-3",
         "placeUrl": "http://www.덕천강.kr/",
