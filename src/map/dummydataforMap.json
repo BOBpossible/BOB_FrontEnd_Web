@@ -7,7 +7,8 @@
         "phone": "041-334-5447",
         "address": "충청남도 예산군 오가면 오촌리 318",
         "placeUrl": "http://www.cnafarm.com",
-        "active": true
+        "active": true,
+        "storeId": 132
       },
       {
         "id": 2,
@@ -16,7 +17,8 @@
         "phone": "041-334-5447",
         "address": "서울특별시 성북구 안암동5가 38",
         "placeUrl": "http://www.cnafarm.com",
-        "active": true
+        "active": true,
+        "storeId": 123
       },
       {
         "id": 3,
@@ -25,7 +27,8 @@
         "phone": "010-8008-4204",
         "address": "경상북도 포항시 북구 신광면 비학로519번길 137-42",
         "placeUrl": "http://www.appleme.co.kr",
-        "active": true
+        "active": true,
+        "storeId": 1423
       },
       {
         "id": 4,
@@ -34,7 +37,8 @@
         "phone": "none",
         "address": "제주특별자치도 제주시 봉개동 1405",
         "placeUrl": "http://www.ejejufarm.com",
-        "active": true
+        "active": true,
+        "storeId": 1234
       },
       {
         "id": 9,
@@ -43,7 +47,8 @@
         "phone": "010-5378-2279",
         "address": "인천 강화군 길상면 해안남로 331",
         "placeUrl": "https://blog.naver.com/gnfarm",
-        "active": true
+        "active": true,
+        "storeId": 1234
       },
       {
         "id": 11,
@@ -52,7 +57,8 @@
         "phone": "063-211-9954",
         "address": "전라북도 전주시 덕진구 화전동 1158",
         "placeUrl": "http://www.junjumall.com",
-        "active": true
+        "active": true,
+        "storeId": 1423
       },
       {
         "id": 21,
@@ -61,7 +67,8 @@
         "phone": "none",
         "address": "광주 북구 금곡동 235",
         "placeUrl": "http://gumgok.cafe24.com",
-        "active": true
+        "active": true,
+        "storeId": 1234
       },
       {
         "id": 23,
@@ -70,7 +77,8 @@
         "phone": "041-852-6763",
         "address": "충청남도 공주시 정안면 전평리 64",
         "placeUrl": "http://kumjung.puruemi.com",
-        "active": true
+        "active": true,
+        "storeId": 1234
       },
       {
         "id": 25,
@@ -79,7 +87,8 @@
         "phone": "02-472-2770",
         "address": "서울특별시 강동구 길동 476",
         "placeUrl": "http://parks.seoul.go.kr/gildong",
-        "active": true
+        "active": true,
+        "storeId": 1324
       },
       {
         "id": 27,
@@ -88,7 +97,8 @@
         "phone": "0507-1347-0924",
         "address": "경상북도 영주시 대학로 148-1",
         "placeUrl": "http://www.appleking.co.kr",
-        "active": true
+        "active": true,
+        "storeId": 124
       },
       {
         "id": 30,
@@ -97,7 +107,8 @@
         "phone": "010-4593-3207",
         "address": "경기도 고양시 덕양구 선유동 166",
         "placeUrl": "http://timeinn.blog.me/",
-        "active": true
+        "active": true,
+        "storeId": 1546
       },
       {
         "id": 31,
@@ -106,7 +117,8 @@
         "phone": "031-833-5005",
         "address": "경기도 연천군 왕징면 북삼리 160-4",
         "placeUrl": "http://www.narubea.kr",
-        "active": false
+        "active": false,
+        "storeId": 1256
       },
       {
         "id": 32,
@@ -115,7 +127,8 @@
         "phone": "010-4283-2264",
         "address": "강원도 양양군 양양읍 안산1길 41",
         "placeUrl": "http://www.naksanbe.pe.kr",
-        "active": false
+        "active": false,
+        "storeId": 142
       },
       {
         "id": 35,
@@ -124,7 +137,8 @@
         "phone": "0507-1320-4829",
         "address": "경상남도 창원시 의창구 대산면 진산대로505번길 51-17",
         "placeUrl": "ttp://www.idangam.co.kr",
-        "active": false
+        "active": false,
+        "storeId": 1435
       },
       {
         "id": 40,
@@ -133,7 +147,8 @@
         "phone": "010-3433-5724",
         "address": "충청남도 부여군 외산면 조령서로 110-55",
         "placeUrl": "http://dalhasan.puruemi.com",
-        "active": false
+        "active": false,
+        "storeId": 1234
       },
       {
         "id": 41,
@@ -142,7 +157,8 @@
         "phone": "010-2225-6641",
         "address": "경기도 남양주시 조안면 다산로761번길 15",
         "placeUrl": "http://www.daega620.co.kr",
-        "active": false
+        "active": false,
+        "storeId": 156
       },
       {
         "id": 46,
@@ -151,7 +167,8 @@
         "phone": "055-754-4737",
         "address": "경상남도 진주시 수곡면 원창길 246-3",
         "placeUrl": "http://www.덕천강.kr/",
-        "active": false
+        "active": false,
+        "storeId": 123446
       }
     ]
   }

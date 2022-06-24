@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import dummy from "./dummydataforMap.json";
 import "./MapContainer.css";
 
-console.log(dummy);
+// console.log(dummy);
 declare global {
   interface Window {
     kakao: any;
@@ -30,8 +30,8 @@ const MapContainer = () => {
             var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
             // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-            var activeInfoWindow = `<div class="active infowindow"><span class="point">${dummy.data[i].point}P</span><span>${dummy.data[i].name}</span></div>`;
-            var inactiveInfoWindow = `<div class="inactive infowindow"><span>${dummy.data[i].name}</span></div>`;
+            var activeInfoWindow = `<div class="active infowindow" id=${dummy.data[i].storeId}><span class="point" id=${dummy.data[i].storeId}>${dummy.data[i].point}P</span><span id=${dummy.data[i].storeId}>${dummy.data[i].name}</span></div>`;
+            var inactiveInfoWindow = `<div class="inactive infowindow" id=${dummy.data[i].storeId}><span id=${dummy.data[i].storeId}>${dummy.data[i].name}</span></div>`;
 
             //인포윈도우
             let infowindow;
@@ -73,12 +73,12 @@ const MapContainer = () => {
                 e.childNodes[1].style.margin = "-8px";
                 e.parentElement.style.top = "-12px";
               }
-              e.parentElement.parentElement.style.display = "flex"; //부모(기본인포윈도우영역)
-              e.parentElement.parentElement.style.background = "none"; //부모(기본인포윈도우영역)
-              e.parentElement.parentElement.style.border = "none"; //부모(기본인포윈도우영역)
-              e.parentElement.parentElement.style.justifyContent = "center"; //부모(기본인포윈도우영역)
+              e.parentElement.parentElement.style.display = "flex";
+              e.parentElement.parentElement.style.background = "none";
+              e.parentElement.parentElement.style.border = "none";
+              e.parentElement.parentElement.style.justifyContent = "center";
 
-              e.parentElement.parentElement.onclick = handleIwClick; //인포윈도우 클릭이벤트
+              e.onclick = handleIwClick; //인포윈도우 클릭이벤트
               e.parentElement.parentElement.style.cursor = "pointer";
             });
           } else {
@@ -88,8 +88,8 @@ const MapContainer = () => {
       );
     }
     function handleIwClick(e: any) {
-      window.ReactNativeWebView.postMessage(e.target);
-      console.log(e.target); //span.point, div.active, span내용 등 각자 다 눌릴수있음... 서버에 보내야한느것 확인
+      window.ReactNativeWebView.postMessage(e.target.id);
+      // console.log(e.target.id);
     }
   }, []);
 
