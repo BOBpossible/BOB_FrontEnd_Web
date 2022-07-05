@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MapContainer />} />
-          <Route path="store/:storeId" element={<MapEachStore />} />
+          <Route path="/store/:storeId" element={<MapEachStore />} />
         </Routes>
       </BrowserRouter>
     </div>
