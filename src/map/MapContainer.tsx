@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MapContainer.css";
 import axios from 'axios';
+import {useParams} from "react-router-dom";
 
 declare global {
   interface Window {
@@ -22,11 +23,12 @@ interface PlaceInterface {
 }
 
 const MapContainer = () => {
+  const params = useParams();
   const [Places, setPlaces] = useState<PlaceInterface[]>([]);  // 검색결과 배열에 담아줌
   const [done, setDone] = useState(false);
 
   async function getData() {
-    await axios.get('https://bobpossible.shop/api/v1/map/stores/25').then(
+    await axios.get(`https://bobpossible.shop/api/v1/map/stores/${params.userId}`).then(
       (res) => {
         // console.log(res);
         setPlaces((Places) => []);
