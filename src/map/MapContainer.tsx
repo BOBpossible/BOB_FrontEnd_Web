@@ -1,16 +1,66 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dummy from "./dummydataforMap.json";
 import "./MapContainer.css";
+import axios from 'axios';
 
-// console.log(dummy);
 declare global {
   interface Window {
     kakao: any;
   }
 }
+interface PlaceInterface {
+  addressDetail: string,
+  addressStreet: string,
+  category: string,
+  distance: number,
+  imageUrl: string,
+  mission: boolean, //혹은 ismission
+  name: string,
+  point: number,
+  storeId: number,
+  userX: number,
+  userY: number,
+}
 
 const MapContainer = () => {
+  const [Places, setPlaces] = useState<PlaceInterface[]>([]);  // 검색결과 배열에 담아줌
+  const [done, setDone] = useState(false);
+
+  async function getData() {
+    await axios.get('https://bobpossible.shop/api/v1/map/stores/25').then(
+      (res) => {
+        // console.log(res);
+        setPlaces((Places) => []);
+        res.data.result.forEach((e: any) => {
+          setPlaces((prev) => [...prev, {
+            addressDetail: e.addressDetail,
+            addressStreet: e.addressStreet,
+            category: e.category,
+            distance: e.distance,
+            imageUrl: e.imageUrl,
+            mission: e.mission,
+            name: e.name,
+            point: e.point,
+            storeId: e.storeId,
+            userX: e.userX,
+            userY: e.userY,
+          }]);
+        });
+        setDone(true);
+      }
+    ) 
+    .catch((err) => {
+      console.log("ERR", err);
+    });
+  }
   useEffect(() => {
+    getData();
+    // console.log(Places);
+  },[])
+
+
+  useEffect(() => {
+    // console.log(Places.length);
     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
     let options = {
       //지도를 생성할 때 필요한 기본 옵션
@@ -20,22 +70,22 @@ const MapContainer = () => {
     let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     let geocoder = new window.kakao.maps.services.Geocoder();
 
-    for (let i = 0; i < dummy.data.length; i++) {
+    for (let i = 0; i < Places.length; i++) {
       // 주소로 좌표를 검색합니다
       geocoder.addressSearch(
-        dummy.data[i].address,
+        Places[i].addressStreet,
         function (result: any, status: any) {
           // 정상적으로 검색이 완료됐으면
           if (status === window.kakao.maps.services.Status.OK) {
             var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
             // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-            var activeInfoWindow = `<div class="active infowindow" id=${dummy.data[i].storeId}><span class="point" id=${dummy.data[i].storeId}>${dummy.data[i].point}P</span><span id=${dummy.data[i].storeId}>${dummy.data[i].name}</span></div>`;
-            var inactiveInfoWindow = `<div class="inactive infowindow" id=${dummy.data[i].storeId}><span id=${dummy.data[i].storeId}>${dummy.data[i].name}</span></div>`;
+            var activeInfoWindow = `<div class="active infowindow" id=${Places[i].storeId}><span class="point" id=${Places[i].storeId}>${Places[i].point}P</span><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
+            var inactiveInfoWindow = `<div class="inactive infowindow" id=${Places[i].storeId}><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
 
             //인포윈도우
             let infowindow;
-            if (dummy.data[i].active) {
+            if (Places[i].mission) {
               infowindow = new window.kakao.maps.InfoWindow({
                 zIndex: 1,
                 position: coords,
@@ -52,7 +102,7 @@ const MapContainer = () => {
                 map: map,
               });
             }
-            var position = new window.kakao.maps.LatLng(37.586272, 127.029005);
+            var position = new window.kakao.maps.LatLng(Places[i].userY, Places[i].userX);
             map.setCenter(position); //중심좌표 재설정
 
             var infoTitle = document.querySelectorAll(".infowindow");
@@ -82,7 +132,7 @@ const MapContainer = () => {
               e.parentElement.parentElement.style.cursor = "pointer";
             });
           } else {
-            console.log("주소 잘못됨: ", dummy.data[i].address);
+            console.log("주소 잘못됨: ", Places[i].name);
           }
         }
       );
@@ -91,7 +141,7 @@ const MapContainer = () => {
       window.ReactNativeWebView.postMessage(e.target.id);
       // console.log(e.target.id);
     }
-  }, []);
+  }, [done]);
 
   return (
     <div id="map" style={{ width: "100vw", height: "100vh" }} /> //너비,높이 모두 상대크기(%)로 꼭 지정해두어야 한다.
