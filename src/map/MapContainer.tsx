@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import dummy from "./dummydataforMap.json";
 import "./MapContainer.css";
 import axios from 'axios';
 
@@ -14,7 +13,7 @@ interface PlaceInterface {
   category: string,
   distance: number,
   imageUrl: string,
-  mission: boolean, //혹은 ismission
+  mission: boolean,
   name: string,
   point: number,
   storeId: number,
@@ -140,6 +139,23 @@ const MapContainer = () => {
     function handleIwClick(e: any) {
       window.ReactNativeWebView.postMessage(e.target.id);
       // console.log(e.target.id);
+    }
+
+
+    // 현위치 (조금 미정확)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude, // 위도
+            lng = position.coords.longitude; // 경도
+        map.panTo(new window.kakao.maps.LatLng(lat,lng));
+        var gps_content = '<div><img class="pulse" draggable="false" unselectable="on" src="https://ssl.pstatic.net/static/maps/m/pin_rd.png" alt=""></div>';
+        var currentOverlay = new window.kakao.maps.CustomOverlay({
+            position: new window.kakao.maps.LatLng(lat,lng),
+            content: gps_content,
+            map: map
+        });
+        currentOverlay.setMap(map);
+    }, () => console.log('err'));
     }
   }, [done]);
 

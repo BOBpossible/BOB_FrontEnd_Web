@@ -34,3 +34,6 @@ font-weight: 300;
     font-weight: 500;
     font-display: swap;
 }
+.pulse {
+    width: 10px;
+}
