@@ -148,7 +148,7 @@ const MapContainer = () => {
           var lat = position.coords.latitude, // 위도
               lng = position.coords.longitude; // 경도
           map.panTo(new window.kakao.maps.LatLng(lat,lng));
-          var gps_content = '<div><img class="pulse" draggable="false" unselectable="on" src="https://ssl.pstatic.net/static/maps/m/pin_rd.png" alt=""></div>';
+          var gps_content = '<div><img class="pulse" draggable="false" unselectable="on" src="https://user-images.githubusercontent.com/81412212/178176495-aa8af236-7082-4373-baa4-821abec31b39.png" alt=""></div>';
           var currentOverlay = new window.kakao.maps.CustomOverlay({
               position: new window.kakao.maps.LatLng(lat,lng),
               content: gps_content,
