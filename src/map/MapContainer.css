@@ -26,22 +26,31 @@
     line-height:22px;
     border-radius:4px;
     padding:0px 10px;
-    font-size: 10px;
 }
-.hi {
+.black {
     z-index: 1;
     background: url('https://user-images.githubusercontent.com/81412212/174342201-0ec0c927-97f1-49dd-8c23-d6a872d9dfad.png') no-repeat !important;
+}
+.purple {
+    z-index: 1;
+    background: url('https://user-images.githubusercontent.com/81412212/174341207-bbaa6a46-2d67-4731-8a51-9a429488affa.png') no-repeat !important;
 }
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 * { 
 font-family: 'Pretendard';
-font-weight: 300;
 }
-
-.point {
+.pointText {
     font-family: 'Pretendard';
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 12px;
+    font-display: swap;
+    padding-top: 4px;
+}
+.nameText {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    font-size: 12px;
     font-display: swap;
 }
 .pulse {

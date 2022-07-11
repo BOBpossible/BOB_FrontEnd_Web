@@ -33,7 +33,6 @@ const MapContainer = () => {
   async function getData() {
     await axios.get(`https://bobpossible.shop/api/v1/map/stores/${params.userId}`).then(
       (res) => {
-        // console.log(res);
         setPlaces((Places) => []);
         res.data.result.forEach((e: any) => {
           setPlaces((prev) => [...prev, {
@@ -62,8 +61,6 @@ const MapContainer = () => {
     // console.log(Places);
   },[])
 
-  const [contents, setContents] = useState([]);
-
   useEffect(() => {
     // console.log(Places.length);
     if (Places.length !==0) {
@@ -85,8 +82,13 @@ const MapContainer = () => {
               var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
               // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-              var activeInfoWindow = `<div class="active infowindow" id=${Places[i].storeId}><span class="point" id=${Places[i].storeId}>${Places[i].point}P</span><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
-              var inactiveInfoWindow = `<div class="inactive infowindow" id=${Places[i].storeId}><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
+              var activeInfoWindow = `<div class="active infowindow" id=${Places[i].storeId}>
+              <span class="pointText" id=${Places[i].storeId}>${Places[i].point}P</span>
+              <span class="nameText" id=${Places[i].storeId}>${Places[i].name}</span>
+              </div>`;
+              var inactiveInfoWindow = `<div class="inactive infowindow" id=${Places[i].storeId}>
+              <span class="nameText" id=${Places[i].storeId}>${Places[i].name}</span>
+              </div>`;
               
               //인포윈도우
               let infowindow;
@@ -116,17 +118,14 @@ const MapContainer = () => {
                 var w = e.offsetWidth + 10;
                 e.parentElement.style.width = w;
                 e.parentElement.style.position = "relative";
-                if (e.className.includes("inactive")) {
-                  //비활성화 핀
+                if (e.className.includes("inactive")) {//비활성화 핀
                   e.parentElement.style.top = "3px";
-                  e.parentElement.previousSibling.style.backgroundImage =
-                    "url('https://user-images.githubusercontent.com/81412212/174342201-0ec0c927-97f1-49dd-8c23-d6a872d9dfad.png')"; //꼭지
-                } else {
-                  e.parentElement.previousSibling.style.backgroundImage =
-                    "url('https://user-images.githubusercontent.com/81412212/174341207-bbaa6a46-2d67-4731-8a51-9a429488affa.png')"; //꼭지
+                  e.parentElement.previousSibling.className = 'black';
+               } else {
+                  e.parentElement.previousSibling.className = 'purple';
                   e.childNodes[1].style.display = "block";
                   e.childNodes[1].style.margin = "-8px";
-                  e.parentElement.style.top = "-12px";
+                  e.parentElement.style.top = "-9px";
                 }
                 e.parentElement.parentElement.style.display = "flex";
                 e.parentElement.parentElement.style.background = "none";

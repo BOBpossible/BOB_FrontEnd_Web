@@ -25,14 +25,12 @@ const MapEachStore = () => {
   const params = useParams();
   console.log(params.missionId, '번 미션');
   const [storeInfo, setStoreInfo] = useState<StoreType>();
-  const [storeXY, setStoreXY] = useState([127.029005,37.586272]);
   const [done, setDone] = useState(false);
 
   async function getData() {
     await axios.get(`https://bobpossible.shop/api/v1/map/mission/${params.missionId}`).then(
       (res) => {
         console.log(res.data.result);
-        // setStoreInfo((Places) => {});
         setStoreInfo({
           addressDetail: res.data.result.addressDetail,
           addressStreet: res.data.result.addressStreet,
@@ -57,12 +55,7 @@ const MapEachStore = () => {
   },[])
   function handleIwClick(e: any) {
     window.ReactNativeWebView.postMessage(e.target.id);
-    // console.log(e.target.id);
   }
-  const [storeLatLng, setStoreLatLng] = useState({
-    lat : 0,
-    lng: 0,
-  });
   useEffect(() => {
     if (storeInfo !== undefined) {
       console.log(storeInfo);
@@ -72,7 +65,6 @@ const MapEachStore = () => {
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       let map = new window.kakao.maps.Map(container, options);
-      let coords;
       let geocoder = new window.kakao.maps.services.Geocoder();
       geocoder.addressSearch(
         storeInfo.addressStreet,
@@ -82,7 +74,10 @@ const MapEachStore = () => {
 
             let storeMarker = new window.kakao.maps.InfoWindow({
               position: storeMarkerPosition,
-              content: `<div class="mission infowindow" id=${params.missionId}><span id=${params.missionId}>${storeInfo.point}P</span><span id=${params.missionId}>${storeInfo.name}</span></div>`,
+              content: `<div class="mission infowindow" id=${params.missionId}>
+              <span class="pointText" id=${params.missionId}>${storeInfo.point}P</span>
+              <span class="nameText" id=${params.missionId}>${storeInfo.name}</span>
+              </div>`,
               map: map,
             })
             map.setCenter(storeMarkerPosition); //중심좌표
@@ -94,8 +89,8 @@ const MapEachStore = () => {
               e.parentElement.style.top = "3px";
               e.childNodes[1].style.display = "block";
               e.childNodes[1].style.margin = "-8px";
-              e.parentElement.style.top = "-12px";
-              e.parentElement.previousSibling.className = 'hi';
+              e.parentElement.style.top = "-9px";
+              e.parentElement.previousSibling.className = 'black';
               e.parentElement.parentElement.style.display = "flex";
               e.parentElement.parentElement.style.background = "none";
               e.parentElement.parentElement.style.border = "none";
