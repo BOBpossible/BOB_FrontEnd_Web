@@ -21,6 +21,9 @@ interface PlaceInterface {
   userX: number,
   userY: number,
 }
+export type Contents = {
+
+}
 
 const MapContainer = () => {
   const params = useParams();
@@ -59,106 +62,107 @@ const MapContainer = () => {
     // console.log(Places);
   },[])
 
+  const [contents, setContents] = useState([]);
 
   useEffect(() => {
     // console.log(Places.length);
-    let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-    let options = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
-      level: 3, //지도의 레벨(확대, 축소 정도)
-    };
-    let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    let geocoder = new window.kakao.maps.services.Geocoder();
+    if (Places.length !==0) {
+      let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      let options = {
+        //지도를 생성할 때 필요한 기본 옵션
+        center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
+        level: 3, //지도의 레벨(확대, 축소 정도)
+      };
+      let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+      let geocoder = new window.kakao.maps.services.Geocoder();
+      for (let i = 0; i < Places.length; i++) {
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(
+          Places[i].addressStreet,
+          function (result: any, status: any) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === window.kakao.maps.services.Status.OK) {
+              var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
-    for (let i = 0; i < Places.length; i++) {
-      // 주소로 좌표를 검색합니다
-      geocoder.addressSearch(
-        Places[i].addressStreet,
-        function (result: any, status: any) {
-          // 정상적으로 검색이 완료됐으면
-          if (status === window.kakao.maps.services.Status.OK) {
-            var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+              // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+              var activeInfoWindow = `<div class="active infowindow" id=${Places[i].storeId}><span class="point" id=${Places[i].storeId}>${Places[i].point}P</span><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
+              var inactiveInfoWindow = `<div class="inactive infowindow" id=${Places[i].storeId}><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
+              
+              //인포윈도우
+              let infowindow;
+              if (Places[i].mission) {
+                infowindow = new window.kakao.maps.InfoWindow({
+                  zIndex: 1,
+                  position: coords,
+                  content: activeInfoWindow,
+                  disableAutoPan: false,
+                  map: map,
+                });
+              } else {
+                infowindow = new window.kakao.maps.InfoWindow({
+                  zIndex: 1,
+                  position: coords,
+                  content: inactiveInfoWindow,
+                  disableAutoPan: false,
+                  map: map,
+                });
+              }
+              var position = new window.kakao.maps.LatLng(Places[i].userY, Places[i].userX);
+              map.setCenter(position); //중심좌표 재설정
 
-            // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-            var activeInfoWindow = `<div class="active infowindow" id=${Places[i].storeId}><span class="point" id=${Places[i].storeId}>${Places[i].point}P</span><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
-            var inactiveInfoWindow = `<div class="inactive infowindow" id=${Places[i].storeId}><span id=${Places[i].storeId}>${Places[i].name}</span></div>`;
+              var infoTitle = document.querySelectorAll(".infowindow");
+              infoTitle.forEach(function (e: any) {
+                // console.log(e,e.className.includes('inactive'));
+                var w = e.offsetWidth + 10;
+                e.parentElement.style.width = w;
+                e.parentElement.style.position = "relative";
+                if (e.className.includes("inactive")) {
+                  //비활성화 핀
+                  e.parentElement.style.top = "3px";
+                  e.parentElement.previousSibling.style.backgroundImage =
+                    "url('https://user-images.githubusercontent.com/81412212/174342201-0ec0c927-97f1-49dd-8c23-d6a872d9dfad.png')"; //꼭지
+                } else {
+                  e.parentElement.previousSibling.style.backgroundImage =
+                    "url('https://user-images.githubusercontent.com/81412212/174341207-bbaa6a46-2d67-4731-8a51-9a429488affa.png')"; //꼭지
+                  e.childNodes[1].style.display = "block";
+                  e.childNodes[1].style.margin = "-8px";
+                  e.parentElement.style.top = "-12px";
+                }
+                e.parentElement.parentElement.style.display = "flex";
+                e.parentElement.parentElement.style.background = "none";
+                e.parentElement.parentElement.style.border = "none";
+                e.parentElement.parentElement.style.justifyContent = "center";
 
-            //인포윈도우
-            let infowindow;
-            if (Places[i].mission) {
-              infowindow = new window.kakao.maps.InfoWindow({
-                zIndex: 1,
-                position: coords,
-                content: activeInfoWindow,
-                disableAutoPan: false,
-                map: map,
+                e.onclick = handleIwClick; //인포윈도우 클릭이벤트
+                e.parentElement.parentElement.style.cursor = "pointer";
               });
             } else {
-              infowindow = new window.kakao.maps.InfoWindow({
-                zIndex: 1,
-                position: coords,
-                content: inactiveInfoWindow,
-                disableAutoPan: false,
-                map: map,
-              });
+              console.log("주소 잘못됨: ", Places[i].name);
             }
-            var position = new window.kakao.maps.LatLng(Places[i].userY, Places[i].userX);
-            map.setCenter(position); //중심좌표 재설정
-
-            var infoTitle = document.querySelectorAll(".infowindow");
-            infoTitle.forEach(function (e: any) {
-              // console.log(e,e.className.includes('inactive'));
-              var w = e.offsetWidth + 10;
-              e.parentElement.style.width = w;
-              e.parentElement.style.position = "relative";
-              if (e.className.includes("inactive")) {
-                //비활성화 핀
-                e.parentElement.style.top = "3px";
-                e.parentElement.previousSibling.style.backgroundImage =
-                  "url('https://user-images.githubusercontent.com/81412212/174342201-0ec0c927-97f1-49dd-8c23-d6a872d9dfad.png')"; //꼭지
-              } else {
-                e.parentElement.previousSibling.style.backgroundImage =
-                  "url('https://user-images.githubusercontent.com/81412212/174341207-bbaa6a46-2d67-4731-8a51-9a429488affa.png')"; //꼭지
-                e.childNodes[1].style.display = "block";
-                e.childNodes[1].style.margin = "-8px";
-                e.parentElement.style.top = "-12px";
-              }
-              e.parentElement.parentElement.style.display = "flex";
-              e.parentElement.parentElement.style.background = "none";
-              e.parentElement.parentElement.style.border = "none";
-              e.parentElement.parentElement.style.justifyContent = "center";
-
-              e.onclick = handleIwClick; //인포윈도우 클릭이벤트
-              e.parentElement.parentElement.style.cursor = "pointer";
-            });
-          } else {
-            console.log("주소 잘못됨: ", Places[i].name);
           }
-        }
-      );
+        );
+      }
+      // 현위치 (조금 미정확)
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude, // 위도
+              lng = position.coords.longitude; // 경도
+          map.panTo(new window.kakao.maps.LatLng(lat,lng));
+          var gps_content = '<div><img class="pulse" draggable="false" unselectable="on" src="https://ssl.pstatic.net/static/maps/m/pin_rd.png" alt=""></div>';
+          var currentOverlay = new window.kakao.maps.CustomOverlay({
+              position: new window.kakao.maps.LatLng(lat,lng),
+              content: gps_content,
+              map: map
+          });
+          currentOverlay.setMap(map);
+        }, () => console.log('err'));
+      }
     }
     function handleIwClick(e: any) {
       window.ReactNativeWebView.postMessage(e.target.id);
       // console.log(e.target.id);
     }
 
-
-    // 현위치 (조금 미정확)
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude, // 위도
-            lng = position.coords.longitude; // 경도
-        map.panTo(new window.kakao.maps.LatLng(lat,lng));
-        var gps_content = '<div><img class="pulse" draggable="false" unselectable="on" src="https://ssl.pstatic.net/static/maps/m/pin_rd.png" alt=""></div>';
-        var currentOverlay = new window.kakao.maps.CustomOverlay({
-            position: new window.kakao.maps.LatLng(lat,lng),
-            content: gps_content,
-            map: map
-        });
-        currentOverlay.setMap(map);
-    }, () => console.log('err'));
-    }
   }, [done]);
 
   return (
