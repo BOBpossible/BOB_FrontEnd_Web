@@ -29,6 +29,7 @@ const MapContainer = () => {
   const params = useParams();
   const [Places, setPlaces] = useState<PlaceInterface[]>([]);  // 검색결과 배열에 담아줌
   const [done, setDone] = useState(false);
+  const [alldone, setAllDone] = useState(false);
 
   async function getData() {
     await axios.get(`https://bobpossible.shop/api/v1/map/stores/${params.userId}`).then(
@@ -62,8 +63,8 @@ const MapContainer = () => {
   },[])
 
   useEffect(() => {
-    // console.log(Places.length);
-    if (Places.length !==0) {
+    console.log(Places.length);
+    if (done === true && Places.length !==0) {
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
         //지도를 생성할 때 필요한 기본 옵션
@@ -156,7 +157,7 @@ const MapContainer = () => {
           currentOverlay.setMap(map);
         }, () => console.log('err'));
       }
-    } else {
+    } else if (done === true && Places.length === 0) {
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
         //지도를 생성할 때 필요한 기본 옵션
