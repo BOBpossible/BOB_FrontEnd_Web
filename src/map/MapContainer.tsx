@@ -69,7 +69,7 @@ const MapContainer = () => {
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
+        center: new window.kakao.maps.LatLng(Places[0].userY, Places[0].userX), //지도의 중심좌표. ((안암역))
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -177,7 +177,7 @@ const MapContainer = () => {
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-      //현위치 (조금 미정확)
+      // 현위치 (조금 미정확)
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function (position) {
