@@ -77,9 +77,9 @@ const MapEachStore = () => {
 
             let storeMarker = new window.kakao.maps.InfoWindow({
               position: storeMarkerPosition,
-              content: `<div class="mission infowindow" id=${params.storeId}>
-              <span class="pointText" id=${params.storeId}>${storeInfo.point}P</span>
-              <span class="nameText" id=${params.storeId}>${storeInfo.name}</span>
+              content: `<div class="mission infowindow" id=${storeInfo.storeId}>
+              <span class="pointText" id=${storeInfo.storeId}>${storeInfo.point}P</span>
+              <span class="nameText" id=${storeInfo.storeId}>${storeInfo.name}</span>
               </div>`,
               map: map,
             });
