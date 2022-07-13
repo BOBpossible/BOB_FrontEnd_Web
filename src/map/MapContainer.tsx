@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MapContainer.css";
-import axios from 'axios';
-import {useParams} from "react-router-dom";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -9,62 +9,63 @@ declare global {
   }
 }
 interface PlaceInterface {
-  addressDetail: string,
-  addressStreet: string,
-  category: string,
-  distance: number,
-  imageUrl: string,
-  mission: boolean,
-  name: string,
-  point: number,
-  storeId: number,
-  userX: number,
-  userY: number,
+  addressDetail: string;
+  addressStreet: string;
+  category: string;
+  distance: number;
+  imageUrl: string;
+  mission: boolean;
+  name: string;
+  point: number;
+  storeId: number;
+  userX: number;
+  userY: number;
 }
-export type Contents = {
-
-}
+export type Contents = {};
 
 const MapContainer = () => {
   const params = useParams();
-  const [Places, setPlaces] = useState<PlaceInterface[]>([]);  // 검색결과 배열에 담아줌
+  const [Places, setPlaces] = useState<PlaceInterface[]>([]); // 검색결과 배열에 담아줌
   const [done, setDone] = useState(false);
   const [alldone, setAllDone] = useState(false);
 
   async function getData() {
-    await axios.get(`https://bobpossible.shop/api/v1/map/stores/${params.userId}`).then(
-      (res) => {
+    await axios
+      .get(`https://bobpossible.shop/api/v1/map/stores/${params.userId}`)
+      .then((res) => {
         setPlaces((Places) => []);
         res.data.result.forEach((e: any) => {
-          setPlaces((prev) => [...prev, {
-            addressDetail: e.addressDetail,
-            addressStreet: e.addressStreet,
-            category: e.category,
-            distance: e.distance,
-            imageUrl: e.imageUrl,
-            mission: e.mission,
-            name: e.name,
-            point: e.point,
-            storeId: e.storeId,
-            userX: e.userX,
-            userY: e.userY,
-          }]);
+          setPlaces((prev) => [
+            ...prev,
+            {
+              addressDetail: e.addressDetail,
+              addressStreet: e.addressStreet,
+              category: e.category,
+              distance: e.distance,
+              imageUrl: e.imageUrl,
+              mission: e.mission,
+              name: e.name,
+              point: e.point,
+              storeId: e.storeId,
+              userX: e.userX,
+              userY: e.userY,
+            },
+          ]);
         });
         setDone(true);
-      }
-    ) 
-    .catch((err) => {
-      console.log("ERR", err);
-    });
+      })
+      .catch((err) => {
+        console.log("ERR", err);
+      });
   }
   useEffect(() => {
     getData();
     // console.log(Places);
-  },[])
+  }, []);
 
   useEffect(() => {
     console.log(Places.length);
-    if (done === true && Places.length !==0) {
+    if (done === true && Places.length !== 0) {
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
         //지도를 생성할 때 필요한 기본 옵션
@@ -80,7 +81,10 @@ const MapContainer = () => {
           function (result: any, status: any) {
             // 정상적으로 검색이 완료됐으면
             if (status === window.kakao.maps.services.Status.OK) {
-              var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+              var coords = new window.kakao.maps.LatLng(
+                result[0].y,
+                result[0].x
+              );
 
               // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
               var activeInfoWindow = `<div class="active infowindow" id=${Places[i].storeId}>
@@ -90,7 +94,7 @@ const MapContainer = () => {
               var inactiveInfoWindow = `<div class="inactive infowindow" id=${Places[i].storeId}>
               <span class="nameText" id=${Places[i].storeId}>${Places[i].name}</span>
               </div>`;
-              
+
               //인포윈도우
               let infowindow;
               if (Places[i].mission) {
@@ -110,7 +114,10 @@ const MapContainer = () => {
                   map: map,
                 });
               }
-              var position = new window.kakao.maps.LatLng(Places[i].userY, Places[i].userX);
+              var position = new window.kakao.maps.LatLng(
+                Places[i].userY,
+                Places[i].userX
+              );
               map.setCenter(position); //중심좌표 재설정
 
               var infoTitle = document.querySelectorAll(".infowindow");
@@ -119,11 +126,12 @@ const MapContainer = () => {
                 var w = e.offsetWidth + 10;
                 e.parentElement.style.width = w;
                 e.parentElement.style.position = "relative";
-                if (e.className.includes("inactive")) {//비활성화 핀
+                if (e.className.includes("inactive")) {
+                  //비활성화 핀
                   e.parentElement.style.top = "3px";
-                  e.parentElement.previousSibling.className = 'black';
-               } else {
-                  e.parentElement.previousSibling.className = 'purple';
+                  e.parentElement.previousSibling.className = "black";
+                } else {
+                  e.parentElement.previousSibling.className = "purple";
                   e.childNodes[1].style.display = "block";
                   e.childNodes[1].style.margin = "-8px";
                   e.parentElement.style.top = "-9px";
@@ -143,20 +151,24 @@ const MapContainer = () => {
         );
       }
       // 현위치 (조금 미정확)
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var lat = position.coords.latitude, // 위도
-              lng = position.coords.longitude; // 경도
-          map.panTo(new window.kakao.maps.LatLng(lat,lng));
-          var gps_content = '<div><img class="pulse" draggable="false" unselectable="on" src="https://user-images.githubusercontent.com/81412212/178176495-aa8af236-7082-4373-baa4-821abec31b39.png" alt=""></div>';
-          var currentOverlay = new window.kakao.maps.CustomOverlay({
-              position: new window.kakao.maps.LatLng(lat,lng),
-              content: gps_content,
-              map: map
-          });
-          currentOverlay.setMap(map);
-        }, () => console.log('err'));
-      }
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition(
+      //     function (position) {
+      //       var lat = position.coords.latitude, // 위도
+      //         lng = position.coords.longitude; // 경도
+      //       map.panTo(new window.kakao.maps.LatLng(lat, lng));
+      //       var gps_content =
+      //         '<div><img class="pulse" draggable="false" unselectable="on" src="https://user-images.githubusercontent.com/81412212/178176495-aa8af236-7082-4373-baa4-821abec31b39.png" alt=""></div>';
+      //       var currentOverlay = new window.kakao.maps.CustomOverlay({
+      //         position: new window.kakao.maps.LatLng(lat, lng),
+      //         content: gps_content,
+      //         map: map,
+      //       });
+      //       currentOverlay.setMap(map);
+      //     },
+      //     () => console.log("err")
+      //   );
+      // }
     } else if (done === true && Places.length === 0) {
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
@@ -165,26 +177,29 @@ const MapContainer = () => {
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-      // 현위치 (조금 미정확)
+      //현위치 (조금 미정확)
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var lat = position.coords.latitude, // 위도
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            var lat = position.coords.latitude, // 위도
               lng = position.coords.longitude; // 경도
-          map.panTo(new window.kakao.maps.LatLng(lat,lng));
-          var gps_content = '<div><img class="pulse" draggable="false" unselectable="on" src="https://user-images.githubusercontent.com/81412212/178176495-aa8af236-7082-4373-baa4-821abec31b39.png" alt=""></div>';
-          var currentOverlay = new window.kakao.maps.CustomOverlay({
-              position: new window.kakao.maps.LatLng(lat,lng),
+            map.panTo(new window.kakao.maps.LatLng(lat, lng));
+            var gps_content =
+              '<div><img class="pulse" draggable="false" unselectable="on" src="https://user-images.githubusercontent.com/81412212/178176495-aa8af236-7082-4373-baa4-821abec31b39.png" alt=""></div>';
+            var currentOverlay = new window.kakao.maps.CustomOverlay({
+              position: new window.kakao.maps.LatLng(lat, lng),
               content: gps_content,
-              map: map
-          });
-          currentOverlay.setMap(map);
-        }, () => console.log('err'));
+              map: map,
+            });
+            currentOverlay.setMap(map);
+          },
+          () => console.log("err")
+        );
       }
     }
     function handleIwClick(e: any) {
       window.ReactNativeWebView.postMessage(e.target.id);
     }
-
   }, [done]);
 
   return (

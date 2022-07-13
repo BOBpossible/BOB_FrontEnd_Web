@@ -1,6 +1,6 @@
-import React, {useState, useEffect } from "react";
-import {useParams} from "react-router-dom";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 // import "./MapEachStore.css";
 declare global {
@@ -9,27 +9,28 @@ declare global {
   }
 }
 export type StoreType = {
-  addressDetail: string,
-  addressStreet: string,
-  category: string,
-  distance: number,
-  mission: boolean,
-  name: string,
-  point: number,
-  storeId: number,
-  userX: number,
-  userY: number,
-}
+  addressDetail: string;
+  addressStreet: string;
+  category: string;
+  distance: number;
+  mission: boolean;
+  name: string;
+  point: number;
+  storeId: number;
+  userX: number;
+  userY: number;
+};
 
 const MapEachStore = () => {
   const params = useParams();
-  console.log(params.missionId, '번 미션');
+  console.log(params.missionId, "번 미션");
   const [storeInfo, setStoreInfo] = useState<StoreType>();
   const [done, setDone] = useState(false);
 
   async function getData() {
-    await axios.get(`https://bobpossible.shop/api/v1/map/mission/${params.missionId}`).then(
-      (res) => {
+    await axios
+      .get(`https://bobpossible.shop/api/v1/map/mission/${params.missionId}`)
+      .then((res) => {
         console.log(res.data.result);
         setStoreInfo({
           addressDetail: res.data.result.addressDetail,
@@ -44,15 +45,14 @@ const MapEachStore = () => {
           userY: res.data.result.userY,
         });
         setDone(true);
-      }
-    ) 
-    .catch((err) => {
-      console.log("ERR", err);
-    });
+      })
+      .catch((err) => {
+        console.log("ERR", err);
+      });
   }
   useEffect(() => {
     getData();
-  },[])
+  }, []);
   function handleIwClick(e: any) {
     window.ReactNativeWebView.postMessage(e.target.id);
   }
@@ -70,16 +70,19 @@ const MapEachStore = () => {
         storeInfo.addressStreet,
         function (result: any, status: any) {
           if (status === window.kakao.maps.services.Status.OK) {
-            let storeMarkerPosition = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+            let storeMarkerPosition = new window.kakao.maps.LatLng(
+              result[0].y,
+              result[0].x
+            );
 
             let storeMarker = new window.kakao.maps.InfoWindow({
               position: storeMarkerPosition,
-              content: `<div class="mission infowindow" id=${params.missionId}>
-              <span class="pointText" id=${params.missionId}>${storeInfo.point}P</span>
-              <span class="nameText" id=${params.missionId}>${storeInfo.name}</span>
+              content: `<div class="mission infowindow" id=${params.storeId}>
+              <span class="pointText" id=${params.storeId}>${storeInfo.point}P</span>
+              <span class="nameText" id=${params.storeId}>${storeInfo.name}</span>
               </div>`,
               map: map,
-            })
+            });
             map.setCenter(storeMarkerPosition); //중심좌표
             var infoTitle = document.querySelectorAll(".infowindow");
             infoTitle.forEach(function (e: any) {
@@ -90,19 +93,18 @@ const MapEachStore = () => {
               e.childNodes[1].style.display = "block";
               e.childNodes[1].style.margin = "-8px";
               e.parentElement.style.top = "-9px";
-              e.parentElement.previousSibling.className = 'black';
+              e.parentElement.previousSibling.className = "black";
               e.parentElement.parentElement.style.display = "flex";
               e.parentElement.parentElement.style.background = "none";
               e.parentElement.parentElement.style.border = "none";
               e.parentElement.parentElement.style.justifyContent = "center";
-      
+
               e.onclick = handleIwClick; //인포윈도우 클릭이벤트
               e.parentElement.parentElement.style.cursor = "pointer";
             });
           }
         }
-      )
-
+      );
     }
   }, [storeInfo]);
 
