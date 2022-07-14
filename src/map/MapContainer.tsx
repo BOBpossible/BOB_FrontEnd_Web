@@ -65,20 +65,17 @@ const MapContainer = () => {
   useEffect(() => {
     console.log(Places.length);
     if (done === true && Places.length !== 0) {
-      let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      let container = document.getElementById("map");
       let options = {
-        //지도를 생성할 때 필요한 기본 옵션
-        center: new window.kakao.maps.LatLng(Places[0].userY, Places[0].userX), //지도의 중심좌표. ((안암역))
-        level: 3, //지도의 레벨(확대, 축소 정도)
+        center: new window.kakao.maps.LatLng(Places[0].userY, Places[0].userX),
+        level: 3,
       };
       let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
       let geocoder = new window.kakao.maps.services.Geocoder();
       for (let i = 0; i < Places.length; i++) {
-        // 주소로 좌표를 검색합니다
         geocoder.addressSearch(
           Places[i].addressStreet,
           function (result: any, status: any) {
-            // 정상적으로 검색이 완료됐으면
             if (status === window.kakao.maps.services.Status.OK) {
               var coords = new window.kakao.maps.LatLng(
                 result[0].y,
@@ -121,7 +118,6 @@ const MapContainer = () => {
 
               var infoTitle = document.querySelectorAll(".infowindow");
               infoTitle.forEach(function (e: any) {
-                // console.log(e,e.className.includes('inactive'));
                 var w = e.offsetWidth + 10;
                 e.parentElement.style.width = w;
                 e.parentElement.style.position = "relative";
@@ -149,71 +145,14 @@ const MapContainer = () => {
           }
         );
       }
-      // 현위치 (조금 미정확)
-      // if (navigator.geolocation) {
-      //   navigator.geolocation.getCurrentPosition(
-      //     function (position) {
-      //       var lat = position.coords.latitude, // 위도
-      //         lng = position.coords.longitude; // 경도
-      //       map.panTo(new window.kakao.maps.LatLng(lat, lng));
-      //       var gps_content =
-      //         '<div><img class="pulse" draggable="false" unselectable="on" src="https://user-images.githubusercontent.com/81412212/178176495-aa8af236-7082-4373-baa4-821abec31b39.png" alt=""></div>';
-      //       var currentOverlay = new window.kakao.maps.CustomOverlay({
-      //         position: new window.kakao.maps.LatLng(lat, lng),
-      //         content: gps_content,
-      //         map: map,
-      //       });
-      //       currentOverlay.setMap(map);
-      //     },
-      //     () => console.log("err")
-      //   );
-      // }
     } else if (done === true && Places.length === 0) {
       console.log('주변 가게 없음');
-      // 현위치 (조금 미정확)
-      if (navigator.geolocation) {
-        let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-        // let options = {
-        //   //지도를 생성할 때 필요한 기본 옵션
-        //   center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
-        //   level: 3, //지도의 레벨(확대, 축소 정도)
-        // };
-        // let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            var lat = position.coords.latitude, // 위도
-              lng = position.coords.longitude; // 경도
-            // map.panTo(new window.kakao.maps.LatLng(lat, lng));
-            let options = {
-              //지도를 생성할 때 필요한 기본 옵션
-              center: new window.kakao.maps.LatLng(lat, lng), //지도의 중심좌표. ((안암역))
-              level: 3, //지도의 레벨(확대, 축소 정도)
-            };
-            let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-            var gps_content =
-              '<div><img class="pulse" draggable="false" unselectable="on" src="https://user-images.githubusercontent.com/81412212/178176495-aa8af236-7082-4373-baa4-821abec31b39.png" alt=""></div>';
-            var currentOverlay = new window.kakao.maps.CustomOverlay({
-              position: new window.kakao.maps.LatLng(lat, lng),
-              content: gps_content,
-              map: map,
-            });
-            currentOverlay.setMap(map);
-          },
-          () => {
-            console.log("err");
-            let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-            let options = {
-              //지도를 생성할 때 필요한 기본 옵션
-              center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
-              level: 3, //지도의 레벨(확대, 축소 정도)
-            };
-            let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-            console.log('현위치 파악 불가');
-          }
-        );
-      } else {
-
-      }
+      let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      let options = {
+        center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
+        level: 3, //지도의 레벨(확대, 축소 정도)
+      };
+      let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     }
     function handleIwClick(e: any) {
       window.ReactNativeWebView.postMessage(e.target.id);
