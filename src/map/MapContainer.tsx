@@ -149,9 +149,10 @@ const MapContainer = () => {
       console.log('주변 가게 없음');
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
-        center: new window.kakao.maps.LatLng(37.586272, 127.029005), //지도의 중심좌표. ((안암역))
+        center: new window.kakao.maps.LatLng(Number(params.x), Number(params.y)), //지도의 중심좌표. ((안암역))
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
+      console.log(options);
       let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     }
     function handleIwClick(e: any) {
