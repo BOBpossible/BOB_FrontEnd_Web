@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/:userId/:lng/:lat" element={<MapContainer />} />
+          <Route path="/:userId/:lat/:lng" element={<MapContainer />} />
           <Route path="/store/:missionId" element={<MapEachStore />} />
         </Routes>
       </BrowserRouter>
