@@ -1,7 +1,9 @@
-import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import MapContainer from './map/MapContainer';
-import MapEachStore from './map/MapEachStore';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MapCategory from "./map/MapCategory";
+import MapContainer from "./map/MapContainer";
+import MapEachStore from "./map/MapEachStore";
+import MapSearch from "./map/MapSearch";
 
 function App() {
   return (
@@ -10,6 +12,11 @@ function App() {
         <Routes>
           <Route path="/:userId/:lat/:lng" element={<MapContainer />} />
           <Route path="/store/:missionId" element={<MapEachStore />} />
+          <Route path="/search/:userId/:keyword" element={<MapSearch />} />
+          <Route
+            path="/search/tag/:userId/:categoryId"
+            element={<MapCategory />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

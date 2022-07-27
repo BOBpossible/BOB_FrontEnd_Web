@@ -145,10 +145,13 @@ const MapContainer = () => {
         );
       }
     } else if (done === true && Places.length === 0) {
-      console.log('주변 가게 없음');
+      console.log("주변 가게 없음");
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
-        center: new window.kakao.maps.LatLng(Number(params.lat), Number(params.lng)), //지도의 중심좌표. ((안암역))
+        center: new window.kakao.maps.LatLng(
+          Number(params.lat),
+          Number(params.lng)
+        ),
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       console.log(options);
