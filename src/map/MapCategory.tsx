@@ -130,26 +130,10 @@ const MapCategory = () => {
 
       let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       let options = {
-        center: new window.kakao.maps.LatLng(37.603209077, 126.433067), //초기아무위치
-        level: 5, //지도의 레벨(확대, 축소 정도)
+        center: new window.kakao.maps.LatLng(params.lat, params.lng),
+        level: 5,
       };
       let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-      // 현위치로 재설정
-      let lat, lng;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            lat = position.coords.latitude; // 위도
-            lng = position.coords.longitude; // 경도
-            console.log(lat, lng);
-            var coords = new window.kakao.maps.LatLng(lat, lng);
-            map.setCenter(coords); //중심좌표 재설정
-          },
-          () => console.log("err")
-        );
-      } else {
-        console.log("현위치 에러");
-      }
     }
   }, [done]);
 

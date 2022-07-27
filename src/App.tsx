@@ -12,9 +12,12 @@ function App() {
         <Routes>
           <Route path="/:userId/:lat/:lng" element={<MapContainer />} />
           <Route path="/store/:missionId" element={<MapEachStore />} />
-          <Route path="/search/:userId/:keyword" element={<MapSearch />} />
           <Route
-            path="/search/tag/:userId/:categoryId"
+            path="/search/:userId/:keyword/:lat/:lng"
+            element={<MapSearch />}
+          />
+          <Route
+            path="/search/tag/:userId/:categoryId/:lat/:lng"
             element={<MapCategory />}
           />
         </Routes>
