@@ -13,7 +13,7 @@ export type StoreType = {
   addressStreet: string;
   category: string;
   distance: number;
-  imageUrl: string;
+  // imageUrl: string;
   mission: boolean;
   name: string;
   point: number;
@@ -24,15 +24,17 @@ export type StoreType = {
 
 const MapCategory = () => {
   const params = useParams();
-  console.log("태그 검색 :", params.categoryId);
+  console.log("검색 카테고리 :", params.categoryId);
   const [storeInfo, setStoreInfo] = useState<StoreType[]>([]);
   const [done, setDone] = useState(false);
 
   async function getData() {
     await axios
-      .post(`https://bobpossible.shop/api/v1/search/tag/${params.categoryId}`)
+      .get(
+        `https://bobpossible.shop/api/v1/search/tag/${params.userId}/${params.categoryId}`
+      )
       .then((res) => {
-        console.log(res.data.result);
+        console.log(res.data);
         setStoreInfo((storeInfo) => []);
         res.data.result.forEach((e: any) => {
           setStoreInfo((prev) => [
@@ -42,7 +44,7 @@ const MapCategory = () => {
               addressStreet: e.addressStreet,
               category: e.category,
               distance: e.distance,
-              imageUrl: e.imageUrl,
+              // imageUrl: e.imageUrl,
               mission: e.mission,
               name: e.name,
               point: e.point,
@@ -64,6 +66,7 @@ const MapCategory = () => {
   function handleIwClick(e: any) {
     window.ReactNativeWebView.postMessage(e.target.id);
   }
+  console.log(done, storeInfo.length);
   useEffect(() => {
     if (done === true && storeInfo.length !== 0) {
       console.log(storeInfo);
@@ -72,7 +75,7 @@ const MapCategory = () => {
         center: new window.kakao.maps.LatLng(
           storeInfo[0].userY,
           storeInfo[0].userX
-        ), //지도의 중심좌표. ((안암역))
+        ), //지도의 중심좌표.
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       let map = new window.kakao.maps.Map(container, options);
@@ -122,8 +125,18 @@ const MapCategory = () => {
           }
         );
       }
+    } else if (done === true && storeInfo.length === 0) {
+      console.log("해당 가게 없음");
+
+      let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      let options = {
+        center: new window.kakao.maps.LatLng(37.603209077, 126.433067), ////////////////////////////
+        level: 1, //지도의 레벨(확대, 축소 정도)
+      };
+      console.log(options);
+      let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     }
-  }, [storeInfo]);
+  }, [done]);
 
   return (
     <div id="map" style={{ width: "100vw", height: "100vh" }} /> //너비,높이 모두 상대크기(%)로 꼭 지정해두어야 한다.
